@@ -17,9 +17,16 @@
 {% if social_icons %}
   {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 {% endif %}
+{{ 'nw-announcementbar.css' | asset_url | stylesheet_tag }}
+
+{%- capture nw_ab_style -%}
+  {%- if section.settings.background_color != blank -%}--nw-ab-bg: {{ section.settings.background_color }};{%- endif -%}
+  {%- if section.settings.text_color != blank -%}--nw-ab-text: {{ section.settings.text_color }};{%- endif -%}
+{%- endcapture -%}
 
 <div
   class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
+  style="{{ nw_ab_style }}"
 >
   <div class="page-width utility-bar__grid{% if announcement_bar and language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--3-col{% elsif language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--2-col{% endif %}">
     {%- if section.settings.show_social and social_icons -%}
@@ -47,6 +54,16 @@
           </p>
           {%- if section.blocks.first.settings.link != blank -%}
             </a>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if section.blocks.first.settings.cta_label != blank -%}
+          <span class="nw-announcement__dot" aria-hidden="true"></span>
+          {%- if section.blocks.first.settings.cta_link != blank -%}
+            <a href="{{ section.blocks.first.settings.cta_link }}" class="nw-announcement__cta">
+              {{- section.blocks.first.settings.cta_label | escape -}}
+            </a>
+          {%- else -%}
+            <span class="nw-announcement__cta">{{ section.blocks.first.settings.cta_label | escape }}</span>
           {%- endif -%}
         {%- endif -%}
       </div>
@@ -107,6 +124,16 @@
                     </p>
                     {%- if block.settings.link != blank -%}
                       </a>
+                    {%- endif -%}
+                  {%- endif -%}
+                  {%- if block.settings.cta_label != blank -%}
+                    <span class="nw-announcement__dot" aria-hidden="true"></span>
+                    {%- if block.settings.cta_link != blank -%}
+                      <a href="{{ block.settings.cta_link }}" class="nw-announcement__cta">
+                        {{- block.settings.cta_label | escape -}}
+                      </a>
+                    {%- else -%}
+                      <span class="nw-announcement__cta">{{ block.settings.cta_label | escape }}</span>
                     {%- endif -%}
                   {%- endif -%}
                 </div>
@@ -186,13 +213,13 @@
       "unit": "s",
       "label": "t:sections.announcement-bar.settings.change_slides_speed.label",
       "default": 5
-    },    
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-4"
-    },  
+    },
     {
       "type": "checkbox",
       "id": "show_line_separator",
@@ -205,8 +232,8 @@
     },
     {
       "type": "paragraph",
-         "content": "t:sections.announcement-bar.settings.paragraph.content"
-    },             
+      "content": "t:sections.announcement-bar.settings.paragraph.content"
+    },
     {
       "type": "checkbox",
       "id": "show_social",

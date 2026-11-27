@@ -1,0 +1,7 @@
+{%- if button_label != blank -%}
+  <div class="nw-section-footer">
+    <a class="nw-btn nw-btn--{{ button_style | default: 'dark' }}" href="{{ button_link | default: '#' }}">
+      {{- button_label -}}
+    </a>
+  </div>
+{%- endif -%}

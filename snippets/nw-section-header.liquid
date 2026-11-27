@@ -1,0 +1,14 @@
+{%- assign nw_tag = heading_tag | default: 'h2' -%}
+{%- if badge != blank or heading != blank or text != blank -%}
+  <div class="nw-section-header">
+    {%- if badge != blank -%}
+      <span class="nw-badge">{{ badge }}</span>
+    {%- endif -%}
+    {%- if heading != blank -%}
+      <{{ nw_tag }} class="nw-h2">{{ heading }}</{{ nw_tag }}>
+    {%- endif -%}
+    {%- if text != blank -%}
+      <p class="nw-body nw-section-header__text">{{ text }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

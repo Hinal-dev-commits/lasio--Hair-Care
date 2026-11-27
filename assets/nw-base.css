@@ -1,0 +1,230 @@
+/* ============ Tokens ============ */
+:root {
+    /* Colors */
+    --nw-dark: #370609;
+    --nw-dark-red: #64000c;
+    --nw-red: #872733;
+    --nw-soft-red: #9f515b;
+    --nw-light-pink: #fff9f9;
+    --nw-white: #fff;
+
+    /* Gradients: use with `background:` not `background-image` */
+    --nw-gradient-light: linear-gradient(84.54deg, rgba(255, 159, 156, .08) 0%, rgba(179, 0, 22, .08) 100%), #fff;
+    --nw-gradient-dark: linear-gradient(180deg, #700e1a 0%, rgba(135, 39, 51, 0) 100%), #da8f93;
+    --nw-badge-bg: var(--nw-gradient-light);
+
+    /* Semantic */
+    --nw-text: var(--nw-dark);
+    --nw-heading: var(--nw-dark-red);
+
+    /* Fonts */
+    --nw-font-heading: 'Instrument Serif', Georgia, serif;
+    --nw-font-body: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    /* Type: mobile */
+    --nw-h1-size: 40px;
+    --nw-h2-size: 36px;
+    --nw-body-size: 16px;
+    --nw-body2-size: 14px;
+    --nw-heading-lh: 1.05;
+    --nw-heading-ls: -0.02em;
+    --nw-body-lh: 1.55;
+    --nw-body2-lh: 1.35;
+
+    /* Layout (confirm these in Figma) */
+    --nw-container: 1280px;
+    --nw-header-gap: 40px;
+    --nw-gutter: 20px;
+    --nw-section-py: 60px;
+    --nw-radius: 8px;
+}
+
+@media (min-width: 990px) {
+    :root {
+        --nw-h1-size: 60px;
+        --nw-h2-size: 48px;
+        --nw-body-size: 18px;
+        --nw-body2-size: 16px;
+        --nw-gutter: 40px;
+        --nw-section-py: 100px;
+    }
+}
+
+/* ============ Scoped base (add class "nw" on each section root) ============ */
+.nw {
+    font-family: var(--nw-font-body);
+    font-size: var(--nw-body-size);
+    font-weight: 400;
+    line-height: var(--nw-body-lh);
+    letter-spacing: 0;
+    color: var(--nw-text);
+    -webkit-font-smoothing: antialiased;
+}
+
+.nw *,
+.nw *::before,
+.nw *::after {
+    box-sizing: border-box;
+}
+
+.nw h1,
+.nw h2,
+.nw h3,
+.nw p,
+.nw figure {
+    margin: 0;
+}
+
+.nw img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+:where(.nw) a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nw a:focus-visible,
+.nw-btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* ============ Typography ============ */
+.nw-h1,
+.nw-h2 {
+    font-family: var(--nw-font-heading);
+    font-weight: 400;
+    /* overrides Dawn, avoids faux-bold */
+    line-height: var(--nw-heading-lh);
+    letter-spacing: var(--nw-heading-ls);
+    /* overrides Dawn's heading spacing */
+    color: var(--nw-heading);
+    text-wrap: balance;
+}
+
+.nw-h1 {
+    font-size: var(--nw-h1-size);
+}
+
+.nw-h2 {
+    font-size: var(--nw-h2-size);
+}
+
+.nw-h1 em,
+.nw-h2 em {
+    font-style: italic;
+}
+
+.nw-body {
+    font-size: var(--nw-body-size);
+    line-height: var(--nw-body-lh);
+}
+
+.nw-body2 {
+    font-size: var(--nw-body2-size);
+    line-height: var(--nw-body2-lh);
+}
+
+.nw-eyebrow {
+    /* match to Figma */
+    font-size: 12px;
+    line-height: 1.35;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--nw-red);
+}
+
+/* ============ Layout ============ */
+.nw-container {
+    width: 100%;
+    max-width: calc(var(--nw-container) + var(--nw-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--nw-gutter);
+}
+
+.nw-section {
+    padding-block: var(--nw-section-py);
+}
+
+/* ============ Buttons (match sizes to Figma) ============ */
+.nw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 100%;
+    min-height: 52px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 0;
+    font: 600 16px/1.28 var(--nw-font-body);
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color .2s, color .2s;
+}
+
+@media (min-width: 990px) {
+    .nw-btn {
+        min-height: 56px;
+        padding: 0 77px;
+        font-size: 18px;
+    }
+}
+
+.nw-btn--light {
+    background: var(--nw-white);
+    color: var(--nw-dark-red);
+}
+
+.nw-btn--light:hover {
+    background: var(--nw-light-pink);
+}
+
+.nw-btn--dark {
+    background: var(--nw-red);
+    color: var(--nw-white);
+}
+
+.nw-btn--dark:hover {
+    background: var(--nw-dark-red);
+}
+
+.nw-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: var(--nw-badge-bg);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--nw-dark-red);
+}
+
+.nw-section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    margin-bottom: var(--nw-header-gap);
+}
+
+.nw-section-header__text {
+    max-width: 600px;
+    color: var(--nw-soft-red);
+}
+
+.nw-section-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--nw-header-gap);
+}
