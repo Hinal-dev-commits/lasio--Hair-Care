@@ -1,7 +1,7 @@
 .utility-bar.nw-announcement {
     padding: 6px 16px;
     background: var(--nw-ab-bg, #370609);
-    color: var(--nw-ab-text, #fff);
+    color: var(--nw-ab-text, #fff) !important;
     font-family: 'Carlito', Calibri, sans-serif;
 }
 
