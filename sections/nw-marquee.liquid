@@ -1,0 +1,204 @@
+{{ 'nw-marquee-banner.css' | asset_url | stylesheet_tag }}
+
+{% render 'nw-section-style', settings: section.settings, section_id: section.id %}
+
+{%- liquid
+  assign s = section.settings
+  assign speed = s.speed | default: 40
+  assign gap_desktop = s.gap_desktop | default: 16
+  assign gap_mobile = s.gap_mobile | default: 16
+-%}
+
+<section
+  class="nw nw-section nw-marquee-banner{% if s.direction == 'ltr' %} nw-marquee-banner--reverse{% endif %}{% if s.pause_on_hover %} nw-marquee-banner--pause{% endif %}"
+  style="--nw-mb-speed: {{ speed }}s; --nw-mb-gap: {{ gap_desktop }}px; --nw-mb-gap-mobile: {{ gap_mobile }}px;"
+>
+  <div class="nw-marquee-banner__bar">
+    <div class="nw-marquee-banner__track">
+      {%- comment -%} The same group is repeated 4 times so the loop never shows an empty space {%- endcomment -%}
+      {%- for copy in (1..4) -%}
+        <div
+          class="nw-marquee-banner__group"
+          {% if copy > 1 %}
+            aria-hidden="true"
+          {% endif %}
+        >
+          {%- for block in section.blocks -%}
+            <div
+              class="nw-marquee-banner__item"
+              {% if copy == 1 %}
+                {{- block.shopify_attributes -}}
+              {% endif %}
+            >
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: height: 40
+                  | image_tag:
+                    class: 'nw-marquee-banner__img',
+                    height: 20,
+                    loading: 'lazy',
+                    alt: block.settings.image.alt
+                }}
+              {%- else -%}
+                <span class="nw-marquee-banner__placeholder"></span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Marquee Banner",
+  "settings": [
+    { "type": "header", "content": "Marquee" },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        { "value": "rtl", "label": "Right to left" },
+        { "value": "ltr", "label": "Left to right" }
+      ],
+      "default": "rtl"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "unit": "s",
+      "label": "Speed (seconds for one loop)",
+      "default": 40
+    },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover", "default": true },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Item gap (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Item gap (mobile)",
+      "default": 16
+    },
+
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 0
+    },
+
+    { "type": "header", "content": "Section background" },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (badge + text SVG)",
+          "info": "Export from Figma, 20px high. Add the text in the file's alt text for accessibility."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Marquee Banner",
+      "category": "NW Sections",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,181 @@
+{{ 'nw-hero.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign img_desktop = section.settings.image_desktop
+  assign img_mobile = section.settings.image_mobile | default: img_desktop
+  assign star_count = section.settings.star_count
+  assign heading_tag = section.settings.heading_tag | default: 'h1'
+-%}
+
+<section
+  class="nw nw-hero nw-hero--align-{{ section.settings.alignment | default: 'left' }}"
+  style="
+    --nw-hero-star: {{ section.settings.star_color | default: '#f5ca3c' }};
+    --nw-hero-review: {{ section.settings.review_color | default: '#ffffff' }};
+    --nw-hero-heading: {{ section.settings.heading_color | default: '#ffffff' }};
+    --nw-hero-text: {{ section.settings.description_color | default: '#ffffff' }};
+  "
+>
+  {%- if img_mobile != blank -%}
+    <picture class="nw-hero__media">
+      {%- if img_desktop != blank -%}
+        <source
+          media="(min-width: 750px)"
+          srcset="{{ img_desktop | image_url: width: 1100 }} 1100w, {{ img_desktop | image_url: width: 1440 }} 1440w, {{ img_desktop | image_url: width: 1920 }} 1920w, {{ img_desktop | image_url: width: 2560 }} 2560w"
+          sizes="100vw"
+        >
+      {%- endif -%}
+      {{
+        img_mobile
+        | image_url: width: 1125
+        | image_tag:
+          class: 'nw-hero__img',
+          alt: '',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '375, 750, 1125',
+          sizes: '100vw'
+      }}
+    </picture>
+  {%- endif -%}
+
+  <div class="nw-container">
+    <div class="nw-hero__content">
+      {%- if section.settings.show_stars or section.settings.review_text != blank -%}
+        <div class="nw-hero__rating">
+          {%- if section.settings.show_stars and star_count > 0 -%}
+            <div class="nw-hero__stars" role="img" aria-label="{{ star_count }} out of 5 stars">
+              {%- for i in (1..star_count) -%}
+                <svg class="nw-hero__star" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.review_text != blank -%}
+            <span class="nw-body2 nw-hero__review">{{ section.settings.review_text | escape }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <{{ heading_tag }} class="nw-h1 nw-hero__heading">{{ section.settings.heading }}</{{ heading_tag }}>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="nw-body nw-hero__text">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="nw-hero__actions">
+          <a
+            class="nw-btn nw-btn--{{ section.settings.button_style | default: 'light' }}"
+            href="{{ section.settings.button_link | default: '#' }}"
+          >
+            {{- section.settings.button_label -}}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Hero",
+  "settings": [
+    { "type": "header", "content": "Images" },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop image",
+      "info": "Figma frame is 1440 × 523. Export at 2x and keep the dark overlay in the image."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image",
+      "info": "Uses the desktop image if left empty."
+    },
+
+    { "type": "header", "content": "Alignment" },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Content alignment",
+      "default": "left"
+    },
+
+    { "type": "header", "content": "Rating" },
+    { "type": "checkbox", "id": "show_stars", "label": "Show stars", "default": true },
+    {
+      "type": "range",
+      "id": "star_count",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Number of stars",
+      "default": 5,
+      "visible_if": "{{ section.settings.show_stars }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#F5CA3C",
+      "visible_if": "{{ section.settings.show_stars }}"
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "Trusted by 20,000+ salon professionals"
+    },
+    { "type": "color", "id": "review_color", "label": "Review text color", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Heading" },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From First Course To <em>Confident Service</em>"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "info": "Use H2 if the page already has an H1.",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" }
+      ],
+      "default": "h1"
+    },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Description" },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "On-demand certification, live monthly webinars, and the prep materials to walk into your first service confident. No seat cost, no travel."
+    },
+    { "type": "color", "id": "description_color", "label": "Description color", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Start the free course" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "dark", "label": "Red" }
+      ],
+      "default": "light"
+    }
+  ],
+  "presets": [{ "name": "NW Hero", "category": "NW Sections" }]
+}
+{% endschema %}

@@ -1,0 +1,268 @@
+{{ 'nw-get-certified.css' | asset_url | stylesheet_tag }}
+
+{% render 'nw-section-style', settings: section.settings, section_id: section.id %}
+
+{%- assign s = section.settings -%}
+
+<section
+  class="nw nw-section nw-certified nw-certified--header-{{ s.alignment | default: 'center' }}"
+  style="
+    --nw-heading: {{ s.heading_color | default: '#64000c' }};
+    --nw-certified-badge: {{ s.badge_color | default: '#64000c' }};
+    --nw-certified-desc: {{ s.description_color | default: '#9f515b' }};
+    --nw-certified-label: {{ s.cards_heading_color | default: '#64000c' }};
+  "
+>
+  <div class="nw-container">
+    {% render 'nw-section-header', badge: s.badge, heading: s.heading, text: s.description %}
+
+    {%- if s.cards_heading != blank or section.blocks.size > 0 -%}
+      <div class="nw-certified__covers">
+        {%- if s.cards_heading != blank -%}
+          <h3 class="nw-certified__label">{{ s.cards_heading }}</h3>
+        {%- endif -%}
+
+        <div class="nw-certified__cards">
+          {%- for block in section.blocks -%}
+            {%- assign b = block.settings -%}
+            {%- assign fallback = 'nw-certified-card-' | append: forloop.index | append: '.jpg' -%}
+            <article
+              class="nw-certified__card"
+              style="
+                --nw-certified-title: {{ b.title_color | default: '#64000c' }};
+                --nw-certified-text: {{ b.text_color | default: '#9f515b' }};
+              "
+              {{ block.shopify_attributes }}
+            >
+              <div class="nw-certified__media">
+                {%- if b.image != blank -%}
+                  {{
+                    b.image
+                    | image_url: width: 800
+                    | image_tag:
+                      class: 'nw-certified__img',
+                      loading: 'lazy',
+                      alt: b.image.alt,
+                      widths: '400, 800',
+                      sizes: '(min-width: 750px) 350px, 111px'
+                  }}
+                {%- else -%}
+                  {%- comment -%} Nothing chosen in admin: use the image from the theme assets folder {%- endcomment -%}
+                  <img
+                    class="nw-certified__img"
+                    src="{{ fallback | asset_url }}"
+                    alt="{{ b.title | strip_html | escape }}"
+                    width="800"
+                    height="800"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+
+              <div class="nw-certified__body">
+                {%- if b.title != blank -%}
+                  <h4 class="nw-certified__title">{{ b.title }}</h4>
+                {%- endif -%}
+                {%- if b.text != blank -%}
+                  <div class="nw-certified__text">{{ b.text }}</div>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if s.show_button -%}
+      {% render 'nw-section-footer',
+        button_label: s.button_label,
+        button_link: s.button_link,
+        button_style: s.button_style
+      %}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Get Certified",
+  "settings": [
+    { "type": "header", "content": "HEADING" },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Section header alignment",
+      "default": "center"
+    },
+    { "type": "inline_richtext", "id": "badge", "label": "Badge text", "default": "Step 1: Get Certified" },
+    { "type": "color", "id": "badge_color", "label": "Badge text color", "default": "#64000C" },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "New to Lasio? Get Certified in <em>Under 30 Minutes</em>"
+    },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#64000C" },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "Finish the on-demand course at your own pace. Your downloadable Lasio Certificate is ready instantly."
+    },
+    { "type": "color", "id": "description_color", "label": "Description color", "default": "#9F515B" },
+
+    { "type": "header", "content": "CARDS" },
+    {
+      "type": "inline_richtext",
+      "id": "cards_heading",
+      "label": "Text above cards",
+      "default": "What This Course Covers"
+    },
+    { "type": "color", "id": "cards_heading_color", "label": "Text above cards color", "default": "#64000C" },
+
+    { "type": "header", "content": "BUTTON" },
+    { "type": "checkbox", "id": "show_button", "label": "Show button", "default": true },
+    {
+      "type": "inline_richtext",
+      "id": "button_label",
+      "label": "Button text",
+      "default": "Become Lasio Certified",
+      "visible_if": "{{ section.settings.show_button }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_button }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "dark", "label": "Dark (red)" },
+        { "value": "light", "label": "Light (white)" }
+      ],
+      "default": "dark",
+      "visible_if": "{{ section.settings.show_button }}"
+    },
+
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    },
+
+    { "type": "header", "content": "Section background" },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFF9F9",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "inline_richtext", "id": "title", "label": "Title", "default": "Product Knowledge" },
+        { "type": "color", "id": "title_color", "label": "Title color", "default": "#64000C" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Get to know the full Lasio range and what each formula is built to do.</p>"
+        },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#9F515B" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "NW Get Certified",
+      "category": "NW Sections",
+      "blocks": [
+        { "type": "card" },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Formula Selection",
+            "text": "<p>Match the right keratin to each client's hair type, texture, and goal.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Application Fundamentals",
+            "text": "<p>The core Lasio application method: every step, from prep to seal.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

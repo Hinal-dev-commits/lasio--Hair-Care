@@ -7,7 +7,7 @@
   media="print"
   onload="this.media='all'"
 >
-
+{{ 'nw-header.css' | asset_url | stylesheet_tag }}
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}

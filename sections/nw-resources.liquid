@@ -1,0 +1,333 @@
+{{ 'nw-resources.css' | asset_url | stylesheet_tag }}
+
+{% render 'nw-section-style', settings: section.settings, section_id: section.id %}
+
+{%- liquid
+  assign s = section.settings
+  assign cards = section.blocks | where: 'type', 'card'
+  assign stats = section.blocks | where: 'type', 'stat'
+-%}
+
+<section
+  class="nw nw-section nw-resources nw-resources--header-{{ s.alignment | default: 'center' }}"
+  style="
+    --nw-heading: {{ s.heading_color | default: '#64000c' }};
+    --nw-resources-badge: {{ s.badge_color | default: '#64000c' }};
+    --nw-resources-desc: {{ s.description_color | default: '#9f515b' }};
+  "
+>
+  <div class="nw-container">
+    {% render 'nw-section-header', badge: s.badge, heading: s.heading, text: s.description %}
+
+    {%- if cards.size > 0 or stats.size > 0 -%}
+      <div class="nw-resources__content">
+        {%- comment -%} Cards: 2 per row on mobile, 3 per row on desktop {%- endcomment -%}
+        {%- if cards.size > 0 -%}
+          <div class="nw-resources__cards">
+            {%- for block in cards -%}
+              {%- assign b = block.settings -%}
+              {%- assign fallback = 'nw-resources-card-' | append: forloop.index | append: '.png' -%}
+              <article
+                class="nw-resources__card{% unless b.show_on_desktop %} nw-resources__card--mobile-only{% endunless %}"
+                style="
+                  --nw-resources-title: {{ b.title_color | default: '#64000c' }};
+                  --nw-resources-text: {{ b.text_color | default: '#9f515b' }};
+                "
+                {{ block.shopify_attributes }}
+              >
+                <div class="nw-resources__media">
+                  {%- if b.image != blank -%}
+                    {{
+                      b.image
+                      | image_url: width: 600
+                      | image_tag:
+                        class: 'nw-resources__img',
+                        loading: 'lazy',
+                        alt: b.image.alt,
+                        widths: '330, 600',
+                        sizes: '(min-width: 750px) 260px, 165px'
+                    }}
+                  {%- else -%}
+                    {%- comment -%} Nothing chosen in admin: use the image from the theme assets folder {%- endcomment -%}
+                    <img
+                      class="nw-resources__img"
+                      src="{{ fallback | asset_url }}"
+                      alt="{{ b.title | strip_html | escape }}"
+                      width="600"
+                      height="600"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+                </div>
+
+                <div class="nw-resources__body">
+                  {%- if b.title != blank -%}
+                    <h3 class="nw-resources__title">{{ b.title }}</h3>
+                  {%- endif -%}
+                  {%- if b.text != blank -%}
+                    <div class="nw-resources__text">{{ b.text }}</div>
+                  {%- endif -%}
+                </div>
+              </article>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Banner (10+ ...) {%- endcomment -%}
+        {%- for block in stats -%}
+          {%- assign b = block.settings -%}
+          <div
+            class="nw-resources__stat"
+            style="
+              --nw-resources-stat-title: {{ b.title_color | default: '#64000c' }};
+              --nw-resources-stat-text: {{ b.text_color | default: '#9f515b' }};
+            "
+            {{ block.shopify_attributes }}
+          >
+            {%- if b.value != blank -%}
+              <p
+                class="nw-resources__value{% if b.value_color != blank %} nw-resources__value--solid{% endif %}"
+                {% if b.value_color != blank %}
+                  style="--nw-resources-value: {{ b.value_color }};"
+                {% endif %}
+              >
+                {{- b.value -}}
+              </p>
+            {%- endif -%}
+
+            <div class="nw-resources__stat-body">
+              {%- if b.title != blank -%}
+                <h3 class="nw-resources__stat-title">{{ b.title }}</h3>
+              {%- endif -%}
+              {%- if b.text != blank -%}
+                <div class="nw-resources__stat-text">{{ b.text }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.show_button -%}
+      {% render 'nw-section-footer',
+        button_label: s.button_label,
+        button_link: s.button_link,
+        button_style: s.button_style
+      %}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Prep Resources",
+  "settings": [
+    { "type": "header", "content": "HEADING" },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Section header alignment",
+      "default": "center"
+    },
+    { "type": "inline_richtext", "id": "badge", "label": "Badge text", "default": "Step 2: Save Your Prep Resources" },
+    { "type": "color", "id": "badge_color", "label": "Badge text color", "default": "#64000C" },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Before You Start: <em>Get Your Prep Resources</em>"
+    },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#64000C" },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "Review these before you start. They double as quick reference during any service."
+    },
+    { "type": "color", "id": "description_color", "label": "Description color", "default": "#9F515B" },
+
+    { "type": "header", "content": "BUTTON" },
+    { "type": "checkbox", "id": "show_button", "label": "Show button", "default": true },
+    {
+      "type": "inline_richtext",
+      "id": "button_label",
+      "label": "Button text",
+      "default": "View All Prep Resources",
+      "visible_if": "{{ section.settings.show_button }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_button }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "dark", "label": "Dark (red)" },
+        { "value": "light", "label": "Light (white)" }
+      ],
+      "default": "dark",
+      "visible_if": "{{ section.settings.show_button }}"
+    },
+
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    },
+
+    { "type": "header", "content": "Section background" },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "limit": 4,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "inline_richtext", "id": "title", "label": "Title", "default": "Lasio Edu Book" },
+        { "type": "color", "id": "title_color", "label": "Title color", "default": "#64000C" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Your full playbook: formulas, consultation, and application.</p>"
+        },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#9F515B" },
+        {
+          "type": "checkbox",
+          "id": "show_on_desktop",
+          "label": "Show on desktop",
+          "info": "Turn off to show this card on mobile only.",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Banner (10+)",
+      "limit": 1,
+      "settings": [
+        { "type": "inline_richtext", "id": "value", "label": "Big number", "default": "10+" },
+        {
+          "type": "color",
+          "id": "value_color",
+          "label": "Big number color",
+          "info": "Leave empty to keep the red gradient."
+        },
+        { "type": "inline_richtext", "id": "title", "label": "Title", "default": "Free Pro Downloads In The Library" },
+        { "type": "color", "id": "title_color", "label": "Title color", "default": "#64000C" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Guides, timing charts, troubleshooting & safety sheets. New ones added regularly.</p>"
+        },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#9F515B" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Prep Resources",
+      "category": "NW Sections",
+      "blocks": [
+        { "type": "card" },
+        {
+          "type": "card",
+          "settings": {
+            "title": "California Keratin Info",
+            "text": "<p>Formula specs for the all-natural, Prop 65 keratin.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Keratin Tropic",
+            "text": "<p>The formaldehyde-free smoothing treatment, step by step.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Follicle Filler",
+            "text": "<p>The 30-minute add-on that rebuilds hair's three bonds.</p>",
+            "show_on_desktop": false
+          }
+        },
+        { "type": "stat" }
+      ]
+    }
+  ]
+}
+{% endschema %}

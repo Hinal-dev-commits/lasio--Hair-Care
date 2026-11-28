@@ -37,9 +37,250 @@
         "padding_top": 44,
         "padding_bottom": 36
       }
+    },
+    "nw_hero_qQcxHn": {
+      "type": "nw-hero",
+      "name": "NW Hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/1._Hero.png",
+        "image_mobile": "shopify://shop_images/1._Hero_1.png",
+        "alignment": "left",
+        "show_stars": true,
+        "star_count": 5,
+        "star_color": "#f5ca3c",
+        "review_text": "Trusted by 20,000+ salon professionals",
+        "review_color": "#ffffff",
+        "heading": "From First Course To <em>Confident Service</em>",
+        "heading_tag": "h1",
+        "heading_color": "#ffffff",
+        "description": "On-demand certification, live monthly webinars, and the prep materials to walk into your first service confident. No seat cost, no travel.",
+        "description_color": "#ffffff",
+        "button_label": "Start the free course",
+        "button_link": "",
+        "button_style": "light"
+      }
+    },
+    "nw_marquee_dTfqhK": {
+      "type": "nw-marquee",
+      "blocks": {
+        "item_dWtqKK": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/m1.svg"
+          }
+        },
+        "item_BQNWaq": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/m2.svg"
+          }
+        },
+        "item_Ar9PDE": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/m3.svg"
+          }
+        },
+        "item_rALaeq": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/m4.svg"
+          }
+        },
+        "item_gPCwCX": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/m5.svg"
+          }
+        },
+        "item_DXx779": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/m6.svg"
+          }
+        }
+      },
+      "block_order": [
+        "item_dWtqKK",
+        "item_BQNWaq",
+        "item_Ar9PDE",
+        "item_rALaeq",
+        "item_gPCwCX",
+        "item_DXx779"
+      ],
+      "name": "NW Marquee",
+      "settings": {
+        "direction": "rtl",
+        "speed": 40,
+        "pause_on_hover": true,
+        "gap_desktop": 16,
+        "gap_mobile": 16,
+        "padding_top": 16,
+        "padding_bottom": 16,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "bg_type": "color",
+        "bg_color": "#64000c",
+        "bg_gradient": ""
+      }
+    },
+    "nw_get_certified_JQN4wW": {
+      "type": "nw-get-certified",
+      "blocks": {
+        "card_w6EAEj": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_3381.png",
+            "title": "Product Knowledge",
+            "title_color": "#64000c",
+            "text": "<p>Get to know the full Lasio range and what each formula is built to do.</p>",
+            "text_color": "#9f515b"
+          }
+        },
+        "card_9wNyrP": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_3382.png",
+            "title": "Formula Selection",
+            "title_color": "#64000c",
+            "text": "<p>Match the right keratin to each client's hair type, texture, and goal.</p>",
+            "text_color": "#9f515b"
+          }
+        },
+        "card_w4AVey": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_3382_1.png",
+            "title": "Application Fundamentals",
+            "title_color": "#64000c",
+            "text": "<p>The core Lasio application method: every step, from prep to seal.</p>",
+            "text_color": "#9f515b"
+          }
+        }
+      },
+      "block_order": [
+        "card_w6EAEj",
+        "card_9wNyrP",
+        "card_w4AVey"
+      ],
+      "name": "NW Get Certified",
+      "settings": {
+        "alignment": "center",
+        "badge": "Step 1: Get Certified",
+        "badge_color": "#64000c",
+        "heading": "New to Lasio? Get Certified in <em>Under 30 Minutes</em>",
+        "heading_color": "#64000c",
+        "description": "Finish the on-demand course at your own pace. Your downloadable Lasio Certificate is ready instantly.",
+        "description_color": "#9f515b",
+        "cards_heading": "What This Course Covers",
+        "cards_heading_color": "#64000c",
+        "show_button": true,
+        "button_label": "Become Lasio Certified",
+        "button_link": "",
+        "button_style": "dark",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "bg_type": "color",
+        "bg_color": "#fff9f9",
+        "bg_gradient": ""
+      }
+    },
+    "nw_resources_fKaeVc": {
+      "type": "nw-resources",
+      "blocks": {
+        "card_J9pmja": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/image_1275.png",
+            "title": "Lasio Edu Book",
+            "title_color": "#64000c",
+            "text": "<p>Your full playbook: formulas, consultation, and application.</p>",
+            "text_color": "#9f515b",
+            "show_on_desktop": true
+          }
+        },
+        "card_yMkg3y": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/image_1300.png",
+            "title": "California Keratin Info",
+            "title_color": "#64000c",
+            "text": "<p>Formula specs for the all-natural, Prop 65 keratin.</p>",
+            "text_color": "#9f515b",
+            "show_on_desktop": true
+          }
+        },
+        "card_ULpryh": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Frame_47.png",
+            "title": "Keratin Tropic",
+            "title_color": "#64000c",
+            "text": "<p>The formaldehyde-free smoothing treatment, step by step.</p>",
+            "text_color": "#9f515b",
+            "show_on_desktop": true
+          }
+        },
+        "card_Ap8gHM": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Frame_47_1.png",
+            "title": "Follicle Filler",
+            "title_color": "#64000c",
+            "text": "<p>The 30-minute add-on that rebuilds hair's three bonds.</p>",
+            "text_color": "#9f515b",
+            "show_on_desktop": false
+          }
+        },
+        "stat_bmTHYg": {
+          "type": "stat",
+          "settings": {
+            "value": "10+",
+            "value_color": "",
+            "title": "Free Pro Downloads In The Library",
+            "title_color": "#64000c",
+            "text": "<p>Guides, timing charts, troubleshooting & safety sheets. New ones added regularly.</p>",
+            "text_color": "#9f515b"
+          }
+        }
+      },
+      "block_order": [
+        "card_J9pmja",
+        "card_yMkg3y",
+        "card_ULpryh",
+        "card_Ap8gHM",
+        "stat_bmTHYg"
+      ],
+      "name": "NW Prep Resources",
+      "settings": {
+        "alignment": "center",
+        "badge": "Step 2: Save Your Prep Resources",
+        "badge_color": "#64000c",
+        "heading": "Before You Start: <em>Get Your Prep Resources</em>",
+        "heading_color": "#64000c",
+        "description": "Review these before you start. They double as quick reference during any service.",
+        "description_color": "#9f515b",
+        "show_button": true,
+        "button_label": "View All Prep Resources",
+        "button_link": "",
+        "button_style": "dark",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_gradient": ""
+      }
     }
   },
   "order": [
-    "featured_collection"
+    "featured_collection",
+    "nw_hero_qQcxHn",
+    "nw_marquee_dTfqhK",
+    "nw_get_certified_JQN4wW",
+    "nw_resources_fKaeVc"
   ]
 }

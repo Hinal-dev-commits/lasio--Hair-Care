@@ -1,0 +1,244 @@
+/* ===== Section (mobile first) ===== */
+.nw-resources {
+    /* Figma mobile: 16px on the sides */
+    --nw-gutter: 16px;
+}
+
+/* ===== Section header (snippet) ===== */
+.nw-resources .nw-section-header {
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.nw-resources .nw-badge {
+    font-size: 12px;
+    color: var(--nw-resources-badge, #64000c);
+}
+
+.nw-resources .nw-section-header__text {
+    max-width: 800px;
+    color: var(--nw-resources-desc, #9f515b);
+}
+
+/* Alignment switch (center is the default from nw-base.css) */
+.nw-resources--header-left .nw-section-header {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.nw-resources--header-right .nw-section-header {
+    align-items: flex-end;
+    text-align: right;
+}
+
+/* ===== Cards + banner wrapper ===== */
+.nw-resources__content {
+    max-width: 800px;
+    margin-inline: auto;
+}
+
+/* ===== Cards: mobile = 2 per row ===== */
+.nw-resources__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 13px;
+}
+
+.nw-resources__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.nw-resources__media {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.nw-resources .nw-resources__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nw-resources__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    text-align: center;
+}
+
+.nw-resources__title {
+    margin: 0;
+    border-bottom: 1px solid var(--nw-red);
+    font-family: var(--nw-font-heading);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--nw-resources-title, #64000c);
+}
+
+.nw-resources__text {
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--nw-resources-text, #9f515b);
+}
+
+/* ===== Banner (10+) ===== */
+.nw-resources__stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    background: var(--nw-gradient-light);
+}
+
+/* Big number: red gradient inside the text (Figma "Gradient Dark") */
+.nw-resources__value {
+    flex-shrink: 0;
+    margin: 0;
+    font-family: var(--nw-font-heading);
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(180deg, #700e1a 7.05%, rgba(135, 39, 51, 0) 88.31%), #da8f93;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* When a color is picked in admin, use it instead of the gradient */
+.nw-resources__value--solid {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: var(--nw-resources-value);
+}
+
+.nw-resources__stat-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.nw-resources__stat-title {
+    margin: 0;
+    font-family: var(--nw-font-heading);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+    color: var(--nw-resources-stat-title, #64000c);
+}
+
+.nw-resources__stat-text {
+    font-size: 13px;
+    line-height: 17px;
+    color: var(--nw-resources-stat-text, #9f515b);
+}
+
+/* ===== Button (Figma: 53px high, full width on mobile) ===== */
+.nw-resources .nw-section-footer {
+    margin-top: 32px;
+}
+
+.nw-resources .nw-btn {
+    width: 100%;
+    min-height: 53px;
+}
+
+/* ===== Tablet and up: 3 cards in a row, the 4th card is hidden ===== */
+@media (min-width: 750px) {
+    .nw-resources__cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+    }
+
+    .nw-resources__card--mobile-only {
+        display: none;
+    }
+
+    .nw-resources__card {
+        gap: 16px;
+    }
+
+    .nw-resources__body {
+        gap: 12px;
+        padding-inline: 16px;
+    }
+
+    .nw-resources__title {
+        font-size: 24px;
+    }
+
+    .nw-resources__text {
+        font-size: 16px;
+    }
+
+    .nw-resources__stat {
+        gap: 16px;
+        padding: 20px 32px;
+    }
+
+    .nw-resources__value {
+        font-size: 52px;
+    }
+
+    .nw-resources__stat-title {
+        font-size: 24px;
+    }
+
+    .nw-resources__stat-text {
+        font-size: 16px;
+        line-height: 21px;
+    }
+}
+
+/* ===== Desktop ===== */
+@media (min-width: 990px) {
+    .nw-resources {
+        --nw-gutter: 40px;
+    }
+
+    .nw-resources .nw-section-header {
+        gap: 16px;
+        margin-bottom: 60px;
+    }
+
+    .nw-resources .nw-badge {
+        font-size: 14px;
+    }
+
+    .nw-resources__title {
+        font-size: 28px;
+    }
+
+    .nw-resources__stat {
+        padding: 20px 48px;
+    }
+
+    .nw-resources__value {
+        font-size: 64px;
+        line-height: 83px;
+    }
+
+    .nw-resources__stat-title {
+        font-size: 28px;
+    }
+
+    .nw-resources .nw-section-footer {
+        margin-top: 48px;
+    }
+
+    .nw-resources .nw-btn {
+        width: 470px;
+    }
+}

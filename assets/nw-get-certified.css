@@ -1,0 +1,179 @@
+/* ===== Section (mobile first) ===== */
+.nw-certified {
+    /* Figma mobile: 16px sides, 32px between header / cards / button */
+    --nw-gutter: 16px;
+    --nw-header-gap: 32px;
+}
+
+/* ===== Section header (snippet) ===== */
+.nw-certified .nw-section-header {
+    gap: 12px;
+}
+
+.nw-certified .nw-badge {
+    font-size: 12px;
+    color: var(--nw-certified-badge, #64000c);
+}
+
+.nw-certified .nw-section-header__text {
+    color: var(--nw-certified-desc, #9f515b);
+}
+
+/* Alignment switch (center is the default from nw-base.css) */
+.nw-certified--header-left .nw-section-header {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.nw-certified--header-right .nw-section-header {
+    align-items: flex-end;
+    text-align: right;
+}
+
+/* ===== Text above cards + cards wrapper ===== */
+.nw-certified__covers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1060px;
+    margin-inline: auto;
+}
+
+.nw-certified__label {
+    font-family: var(--nw-font-heading);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: var(--nw-heading-ls);
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--nw-certified-label, #64000c);
+}
+
+/* ===== Cards: mobile = image on the left, text on the right ===== */
+.nw-certified__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.nw-certified__card {
+    display: flex;
+    min-height: 112px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.nw-certified__media {
+    position: relative;
+    flex: 0 0 111px;
+}
+
+.nw-certified .nw-certified__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nw-certified__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    padding: 14px 12px 14px 12px;
+}
+
+.nw-certified__title {
+    margin: 0;
+    font-family: var(--nw-font-heading);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: 0;
+    text-transform: capitalize;
+    color: var(--nw-certified-title, #64000c);
+}
+
+.nw-certified__text {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--nw-certified-text, #9f515b);
+}
+
+/* ===== Button (Figma: 53px high, full width on mobile) ===== */
+.nw-certified .nw-btn {
+    width: 100%;
+    min-height: 53px;
+}
+
+/* ===== Tablet and up: 3 cards in a row, image on top ===== */
+@media (min-width: 750px) {
+    .nw-certified__cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .nw-certified__card {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .nw-certified__media {
+        flex: none;
+        height: 220px;
+    }
+
+    .nw-certified__body {
+        padding: 16px;
+    }
+
+    .nw-certified__title {
+        font-size: 24px;
+    }
+}
+
+/* ===== Desktop ===== */
+@media (min-width: 990px) {
+    .nw-certified {
+        --nw-gutter: 40px;
+        --nw-header-gap: 48px;
+    }
+
+    .nw-certified .nw-section-header {
+        gap: 16px;
+    }
+
+    .nw-certified .nw-badge {
+        font-size: 14px;
+    }
+
+    .nw-certified__covers {
+        gap: 24px;
+    }
+
+    .nw-certified__label {
+        font-size: 32px;
+    }
+
+    .nw-certified__body {
+        padding: 20px;
+    }
+
+    .nw-certified__title {
+        font-size: 28px;
+    }
+
+    .nw-certified__text {
+        font-size: 16px;
+        line-height: 1.35;
+    }
+
+    .nw-certified .nw-btn {
+        width: 470px;
+    }
+}

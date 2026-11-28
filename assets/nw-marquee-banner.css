@@ -1,0 +1,75 @@
+/* ===== Bar (Figma: 1440 x 52, #64000C, padding 16px) ===== */
+.nw-marquee-banner__bar {
+    /* padding-block: 16px; */
+    overflow: hidden;
+    background: var(--nw-marquee-banner-bg, #64000c);
+}
+
+/* ===== Moving row ===== */
+.nw-marquee-banner__track {
+    display: flex;
+    width: max-content;
+}
+
+/* One group = all items. Every group moves left by its own width, so the loop is seamless */
+.nw-marquee-banner__group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--nw-mb-gap-mobile, 16px);
+    padding-right: var(--nw-mb-gap-mobile, 16px);
+    /* same as the gap, so the space between groups matches */
+    animation: nw-marquee-banner-scroll var(--nw-mb-speed, 40s) linear infinite;
+}
+
+.nw-marquee-banner--reverse .nw-marquee-banner__group {
+    animation-direction: reverse;
+}
+
+.nw-marquee-banner--pause .nw-marquee-banner__bar:hover .nw-marquee-banner__group {
+    animation-play-state: paused;
+}
+
+@keyframes nw-marquee-banner-scroll {
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* ===== Items (badge + text come from the SVG, 20px high in Figma) ===== */
+.nw-marquee-banner__item {
+    flex-shrink: 0;
+}
+
+.nw-marquee-banner .nw-marquee-banner__img {
+    display: block;
+    width: auto;
+    max-width: none;
+    height: 20px;
+}
+
+.nw-marquee-banner__placeholder {
+    display: block;
+    width: 200px;
+    height: 20px;
+    background: #d9d9d9;
+}
+
+/* ===== Desktop ===== */
+@media (min-width: 750px) {
+    .nw-marquee-banner__group {
+        gap: var(--nw-mb-gap, 16px);
+        padding-right: var(--nw-mb-gap, 16px);
+    }
+}
+
+/* ===== Users who turned off animations ===== */
+@media (prefers-reduced-motion: reduce) {
+    .nw-marquee-banner__group {
+        animation: none;
+    }
+
+    .nw-marquee-banner__bar {
+        overflow-x: auto;
+    }
+}

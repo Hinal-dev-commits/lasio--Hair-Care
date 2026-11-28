@@ -18,7 +18,9 @@
           "type": "announcement",
           "settings": {
             "text": "Welcome to our store",
-            "link": ""
+            "link": "",
+            "cta_label": "Shop now",
+            "cta_link": ""
           }
         }
       },
@@ -29,6 +31,8 @@
         "auto_rotate": false,
         "change_slides_speed": 5,
         "color_scheme": "scheme-1",
+        "background_color": "#370609",
+        "text_color": "#ffffff",
         "show_line_separator": true,
         "show_social": false,
         "enable_country_selector": false,
@@ -43,7 +47,7 @@
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
-        "show_line_separator": true,
+        "show_line_separator": false,
         "color_scheme": "scheme-1",
         "menu_color_scheme": "scheme-1",
         "enable_country_selector": false,
